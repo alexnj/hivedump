@@ -1,6 +1,6 @@
 String serialize(dynamic object) {
   if (object is String) {
-    return '"${object.toString()}"';
+    return '"${object.toString().replaceAll('"', '\\"')}"';
   }
   if (object is num || object is bool) {
     return object.toString();

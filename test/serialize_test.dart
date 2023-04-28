@@ -9,6 +9,11 @@ void main() {
     expect(serialize(true), equals('true'));
   });
 
+  test('serializes strings with quotes', () {
+    expect(serialize('he said "hello"'), equals('"he said \\"hello\\""'));
+    expect(serialize("ol' town"), equals('"ol\' town"'));
+  });
+
   test('serializes lists', () {
     expect(serialize([1, 2, 3]), equals('[1, 2, 3]'));
     expect(serialize(['a', 'b', 'c']), equals('["a", "b", "c"]'));
