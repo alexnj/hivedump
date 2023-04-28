@@ -25,5 +25,17 @@ void main() {
     expect(serialize({'a': 1, 'b': 2}), equals('{"a": 1, "b": 2}'));
     expect(serialize({1: 'a', 2: 'b'}), equals('{"1": "a", "2": "b"}'));
     expect(serialize({true: 1, false: 0}), equals('{"true": 1, "false": 0}'));
+    expect(serialize({'foo': 'bar'}), '{"foo": "bar"}');
+  });
+
+  test('serializes nested objects', () {
+    expect(
+        serialize({
+          'name': 'John Doe',
+          'age': 30,
+          'address': '123 Main Street, Anytown, CA 12345',
+          'friends': ['Alice', 'Bob', 'Carol'],
+        }),
+        '{"name": "John Doe", "age": 30, "address": "123 Main Street, Anytown, CA 12345", "friends": ["Alice", "Bob", "Carol"]}');
   });
 }
