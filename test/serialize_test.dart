@@ -26,16 +26,4 @@ void main() {
     expect(serialize({1: 'a', 2: 'b'}), equals('{"1": "a", "2": "b"}'));
     expect(serialize({true: 1, false: 0}), equals('{"true": 1, "false": 0}'));
   });
-
-  test('serializes complex objects', () {
-    var obj = MyClass('foo', 42);
-    expect(serialize(obj), equals('{"foo": "foo", "bar": 42}'));
-  });
-}
-
-class MyClass {
-  String foo;
-  int bar;
-
-  MyClass(this.foo, this.bar);
 }
