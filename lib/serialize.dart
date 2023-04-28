@@ -2,15 +2,18 @@ import 'dart:mirrors';
 
 String serialize(dynamic object) {
   if (object == null) return '';
-  if (object is String || object is num || object is bool) {
+  if (object is String) {
     return '"${object.toString()}"';
+  }
+  if (object is num || object is bool) {
+    return object.toString();
   }
   if (object is List) {
     return object.map((e) => serialize(e)).toList().toString();
   }
   if (object is Map) {
-    return Map.fromEntries(object.entries
-            .map((e) => MapEntry('"${e.key.toString()}"', serialize(e.value))))
+    return Map.fromEntries(object.entries.map(
+            (e) => MapEntry(serialize(e.key.toString()), serialize(e.value))))
         .toString();
   }
   if (object is Set) {
@@ -28,7 +31,7 @@ String serialize(dynamic object) {
     if (value is VariableMirror && !value.isStatic) {
       String fieldName = MirrorSystem.getName(key);
       dynamic fieldValue = instanceMirror.getField(key).reflectee;
-      result[fieldName] = serialize(fieldValue);
+      result[serialize(fieldName)] = serialize(fieldValue);
     }
   });
 
