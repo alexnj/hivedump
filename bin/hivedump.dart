@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:hive/hive.dart';
 import 'package:path/path.dart';
+import 'package:hivedump/serialize.dart';
 
-void main(List<String> arguments) async  {
+void main(List<String> arguments) async {
   final parser = ArgParser();
   ArgResults argResults = parser.parse(arguments);
   final paths = argResults.rest;
@@ -16,7 +16,7 @@ void main(List<String> arguments) async  {
       return;
     }
 
-    File file = new File(path);
+    File file = File(path);
     if (!file.existsSync()) {
       stderr.writeln('error: $path does not exist.');
       exitCode = 2;
@@ -31,6 +31,7 @@ void main(List<String> arguments) async  {
 
     var box = await Hive.openBox(boxName);
     Map boxContents = box.toMap();
-    stdout.writeln(boxContents);
+
+    stdout.writeln(serialize(boxContents));
   }
 }
